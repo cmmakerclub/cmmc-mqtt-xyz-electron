@@ -24,6 +24,7 @@
     "angular-highlightjs": "~0.4.3",
     "ng-mfb": "~0.6.2",
     "ionicons": "~2.0.1",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "paho-mqtt": "*"
   }
 }

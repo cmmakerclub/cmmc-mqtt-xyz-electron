@@ -3,7 +3,7 @@
  
 <head>
     <meta charset="utf-8">
-    <title>The Jackal of Javascript | Offline Viewer</title>
+    <title>CMMC - Devices</title>
     <link rel="stylesheet" href="app/client/lib/roboto-fontface/css/roboto-fontface.css">
     <link rel="stylesheet" type="text/css" href="app/client/lib/open-sans-fontface/open-sans.css">
     <link rel="stylesheet" type="text/css" href="app/client/lib/angular-material/angular-material.css">
@@ -11,6 +11,8 @@
     <link rel="stylesheet" type="text/css" href="app/client/css/highlight.css">
     <link rel="stylesheet" type="text/css" href="app/client/lib/ng-mfb/mfb/dist/mfb.css">
     <link rel="stylesheet" href="app/client/css/index.css">
+    <link rel="stylesheet" href="app/client/styles/vendor.css">
+    <link rel="stylesheet" href="app/client/styles/app.css">
     <script type="text/javascript">
     // start the socket server
     </script>
@@ -23,6 +25,7 @@
     <script>
     window.$ = window.jQuery = require('./app/client/lib/jquery/dist/jquery.min');
     </script>
+    <script type="text/javascript" src="app/client/lib/paho-mqtt/src/mqttws31.js"></script>
     <script type="text/javascript" src="app/client/lib/angular/angular.js"></script>
     <script type="text/javascript" src="app/client/lib/angular-animate/angular-animate.js"></script>
     <script type="text/javascript" src="app/client/lib/angular-aria/angular-aria.js"></script>
@@ -31,6 +34,7 @@
 
     <script type="text/javascript" src="app/client/lib/ng-mfb/src/mfb-directive.js"></script>
     <script type="text/javascript" src="app/client/js/controllers.js"></script>
+    <script type="text/javascript" src="app/client/js/services/mqttwsprovider.js"></script>
     <script type="text/javascript" src="app/client/js/app.js"></script>
     <!--
     <script type="text/javascript" src="app/client/js/services.js"></script>

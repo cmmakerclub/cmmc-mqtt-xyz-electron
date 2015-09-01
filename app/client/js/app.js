@@ -11,7 +11,7 @@
 // socketScript.onload = function() {
 // }
  
-angular.module('OfflineViewer', ['ngMaterial', 'ngRoute',  'OfflineViewer.controllers'])
+angular.module('CMMCDevices', ['ngMaterial', 'ngRoute',  'CMMCDevices.controllers', 'CMMCDevices.providers'])
  
 .config(['$routeProvider', '$mdThemingProvider',
         function($routeProvider, $mdThemingProvider) {
@@ -26,7 +26,8 @@ angular.module('OfflineViewer', ['ngMaterial', 'ngRoute',  'OfflineViewer.contro
             $routeProvider
                 .when('/', {
                     templateUrl: 'app/client/templates/App.html',
-                    controller: 'AppCtrl'
+                    controller: 'AppCtrl',
+                    controllerAs: 'main'
                 })
  
             .otherwise({
@@ -52,4 +53,4 @@ angular.module('OfflineViewer', ['ngMaterial', 'ngRoute',  'OfflineViewer.contro
         });
  
     }])
-    angular.bootstrap(document, ["OfflineViewer"]);
+    angular.bootstrap(document, ["CMMCDevices"]);

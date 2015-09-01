@@ -1,27 +1,28 @@
-<!-- <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-close="$mdMedia('lt-sm')">
-	<md-list>
-		<md-subheader>All Posts</md-subheader>
-		<md-progress-circular ng-show="posts.length === 0" class="md-accent center-block" md-mode="indeterminate"></md-progress-circular>
-		<md-list-item ng-click="showPost(post)" ng-repeat="post in posts" class="list">
-		<p>HELLO</p>
-			<md-divider></md-divider>
-		</md-list-item>
-	</md-list>
-</md-sidenav> -->
-<div layout="column" flex id="content">
-	<md-content layout="column" flex class="post">
-		<md-whiteframe ng-show="!post" class="md-whiteframe-z2" layout layout-align="center center">
-			<div layout="column" layout-align="center center">
-<!-- 				<div class="md-title">Click on the Menu to start reading posts!</div>
-				<div class="mg-top-20p md-title" ng-show="posts.length === 0">
-					Waiting for First Page Posts to Load <span class="md-subhead" ng-show="onLine">(This may take some time)</span>..
-				</div>
- -->			
- <p>HELLO WORLD {{ ready }}</p>
-</div>
+<div layout="vertical" layout-fill>
+  <!--<md-toolbar layout="row" layout-align="space-around center">-->
+  <md-content>
+    <header>
+      <!-- <acme-navbar creationDate="main.creationDate" /> -->
+    </header>
 
-		</md-whiteframe>
-		<!-- <div ng-bind-html="post | post"></div> -->
-		<blog-post post="post" ng-show="post" class="md-padding"></blog-post>
-	</md-content>
+    <section class="jumbotron">
+      <div class="techs" layout-align="center">
+        <md-card ng-class="device.status" ng-repeat="device in main.devices | orderBy:'device.d.myName'">
+          <div class="thumbnail">
+            <!--<img class="pull-right" ng-src="assets/images/{{ device.logo }}" alt="{{ device.title }}">-->
+            <div class="caption">
+              <h3>{{ device.d.myName }} - {{ device.status }}</h3>
+              <p>{{ device.info.id || device.d.id }}</p>
+              <p>{{ device.d.seconds }} ({{ device.d.subscription }})</p>
+              <p>{{ device.info.sensor || device.d.sensor || "?" }}</p>
+              <p ng-show="{{device.online}}">esp8266/{{ device.info.id || device.d.id }}/status</p>
+              <!--<p>esp8266/{{ device.info.id || device.d.id }}/command</p>                            -->
+              <p><a ng-href="{{ device.url }}">{{ device.url }}</a></p>
+            </div>
+          </div>
+        </md-card>
+      </div>
+    </section>
+  </md-content>
+
 </div>
