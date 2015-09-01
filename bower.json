@@ -1,0 +1,29 @@
+{
+  "name": "electron01",
+  "main": "index.js",
+  "version": "0.0.1",
+  "authors": [
+    "Nat Weerawan <nat@opendream.co.th>"
+  ],
+  "moduleType": [
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "~0.10.1",
+    "angular-route": "~1.4.5",
+    "roboto-fontface": "~0.4.3",
+    "open-sans-fontface": "~1.4.2",
+    "angular-highlightjs": "~0.4.3",
+    "ng-mfb": "~0.6.2",
+    "ionicons": "~2.0.1",
+    "jquery": "~2.1.4"
+  }
+}
