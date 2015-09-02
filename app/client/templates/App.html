@@ -29,8 +29,14 @@
     <section class="jumbotron">
 
       <div layout="row" layout-align="end center">
+
         <md-input-container>
-          <label>Status</label>
+          <label>Filter by name</label>
+          <input ng-model="filterDevice.name">
+        </md-input-container>
+
+        <md-input-container>
+          <label>Status</label>          
           <md-select name="onlineStatus" ng-model="onlineStatus" required>
             <md-optgroup label="Status">
             <md-option value="ALL">All</md-option>
@@ -40,8 +46,12 @@
         </md-input-container>
       </div>
 
+      <div layout="row" layout-sm="column" layout-align="space-around" ng-if="(main.devices | isEmpty) == true">
+        <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
+      </div>
+
       <div class="techs" layout-align="center">
-        <md-card ng-class="device.status" ng-repeat="device in main.devices | status:onlineStatus | orderBy:d.myName">
+        <md-card ng-class="device.status" ng-repeat="device in main.devices | name:filterDevice.name | status:onlineStatus">
           <div class="thumbnail">
             <!--<img class="pull-right" ng-src="assets/images/{{ device.logo }}" alt="{{ device.title }}">-->
             <div class="caption">

@@ -34,6 +34,29 @@
         return result;
       };
     })
+    .filter('name', function() {
+      return function(input, name) {
+
+        var result = {};
+        angular.forEach(input, function(value, key) {
+          if (value.d.myName.toLowerCase().indexOf(name.toLowerCase()) > -1) {
+            result[key] = value;
+          }
+        });
+        return result;
+      };
+    })
+    .filter('isEmpty', function () {
+      var bar;
+      return function (obj) {
+        for (bar in obj) {
+          if (obj.hasOwnProperty(bar)) {
+            return false;
+          }
+        }
+        return true;
+      };
+    })
     .controller('AppCtrl', AppCtrl);
 
   /** @ngInject */
@@ -43,7 +66,9 @@
     vm.LWT = {};
 
     $scope.onlineStatus = "ALL";
-  
+    $scope.filterDevice = {};
+    $scope.filterDevice.name = "";
+
     var onMsg = function (topic, payload) {
       // console.log("topic", topic, payload);
       var _payload = JSON.parse(payload);
