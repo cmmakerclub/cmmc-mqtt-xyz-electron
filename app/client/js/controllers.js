@@ -18,6 +18,22 @@
       var MQTT = mqttwsProvider(options);
       return MQTT;
     })
+    .filter('status', function() {
+      return function(input, status) {
+
+        if (status == "ALL") {
+          return input;
+        }
+
+        var result = {};
+        angular.forEach(input, function(value, key) {
+          if (value.status == status) {
+            result[key] = value;
+          }
+        });
+        return result;
+      };
+    })
     .controller('AppCtrl', AppCtrl);
 
   /** @ngInject */
@@ -26,6 +42,8 @@
     vm.devices = {};
     vm.LWT = {};
 
+    $scope.onlineStatus = "ALL";
+  
     var onMsg = function (topic, payload) {
       // console.log("topic", topic, payload);
       var _payload = JSON.parse(payload);

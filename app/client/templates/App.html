@@ -5,9 +5,43 @@
       <!-- <acme-navbar creationDate="main.creationDate" /> -->
     </header>
 
+    <!-- <div layout-gt-sm="row">
+      <md-input-container flex="" class="md-default-theme">
+        <label for="input_373">Host</label>
+        <input type="text" class="md-input">
+      </md-input-container>
+
+      <md-input-container flex="" class="md-default-theme">
+        <label for="input_373">Port</label>
+        <input type="text" class="md-input">
+      </md-input-container>
+    </div>
+
+    <div layout="row">
+
+      <div flex offset="70">
+        <md-button class="md-raised">Online</md-button>
+        <md-button class="md-raised">Offline</md-button>
+      </div>
+
+    </div> -->
+
     <section class="jumbotron">
+
+      <div layout="row" layout-align="end center">
+        <md-input-container>
+          <label>Status</label>
+          <md-select name="onlineStatus" ng-model="onlineStatus" required>
+            <md-optgroup label="Status">
+            <md-option value="ALL">All</md-option>
+            <md-option value="ONLINE">Online</md-option>
+            <md-option value="DEAD">Offline</md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+
       <div class="techs" layout-align="center">
-        <md-card ng-class="device.status" ng-repeat="device in main.devices | orderBy:'device.d.myName'">
+        <md-card ng-class="device.status" ng-repeat="device in main.devices | status:onlineStatus | orderBy:d.myName">
           <div class="thumbnail">
             <!--<img class="pull-right" ng-src="assets/images/{{ device.logo }}" alt="{{ device.title }}">-->
             <div class="caption">
