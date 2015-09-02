@@ -12,7 +12,7 @@
             <!--<img class="pull-right" ng-src="assets/images/{{ device.logo }}" alt="{{ device.title }}">-->
             <div class="caption">
               <h3>{{ device.d.myName }} - {{ device.status }}</h3>
-              <p>{{ device.info.id || device.d.id }}</p>
+              <p>{{ device.info.id || device.d.id }} - {{ device.d.ip }}</p>
               <p>{{ device.d.seconds }} ({{ device.d.subscription }})</p>
               <p>{{ device.info.sensor || device.d.sensor || "?" }}</p>
               <p ng-show="{{device.online}}">esp8266/{{ device.info.id || device.d.id }}/status</p>

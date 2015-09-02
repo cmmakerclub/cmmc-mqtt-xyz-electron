@@ -9,10 +9,8 @@
  */
 angular.module('CMMCDevices.providers', [])
     .provider('mqttwsProvider', function () {
-        // console.log("mqttwsProvider")
         // Method for instantiating
         this.$get = function ($q, $window) {
-            // console.log("$get");
 
             return function socketFactory(options) {
                 var host;
@@ -22,9 +20,11 @@ angular.module('CMMCDevices.providers', [])
                 var password = null;
                 var cleansession = true;
                 var mqtt;
+                var _mqtt = require("mqtt")
                 var reconnectTimeout = 2000;
                 var events = {};
 
+                var _options = { };
                 var wrappedSocket = {
                     on: function (event, func) {
                         events[event] = func;
@@ -56,32 +56,20 @@ angular.module('CMMCDevices.providers', [])
                             $window.setTimeout(wrappedSocket.connect, reconnectTimeout);
                         };
 
-                        var options = {
-                            timeout: 3,
-                            useSSL: useTLS,
-                            cleanSession: cleansession,
-                            onSuccess: onSuccess,
-                            onFailure: onFailure
-                        };
 
-                        if (username !== null) {
-                            options.userName = username;
-                            options.password = password;
-                        }
+                        _options = angular.extend({ }, options)
+                        mqtt = _mqtt.connect('mqtt://'+ _options.host, _options);
+                        mqtt.on('connect', onSuccess);
 
-                        mqtt.connect(options);
 
-                        mqtt.onMessageArrived = function (message) {
-                            var topic = message.destinationName;
-                            var payload = message.payloadString;
+                        mqtt.on('message', function (topic, message) {
+                            var topic = topic.toString();
+                            var payload = message.toString();
                             var ev = events.message || function () { };
                             ev.apply(null, [topic, payload, message]);
-
                             var ev2 = events[topic.toString()] || function () { };
-                            // console.log("EV", ev);
-                            // console.log("EV2", ev2);
                             ev2.apply(null, [payload, message]);
-                        };
+                        });
 
                         return defer.promise;
                     }
@@ -89,10 +77,9 @@ angular.module('CMMCDevices.providers', [])
 
                 options = options || {};
 
-                host = options.host;
-                port = options.port;
 
-                mqtt = new Paho.MQTT.Client(host, port, "web_" + parseInt(Math.random() * 100, 10));
+                // mqtt = new Paho.MQTT.Client(host, port, "web_" + parseInt(Math.random() * 100, 10));
+                // mqtt.conn
 
                 // var callback = options.callback;
 

@@ -1,8 +1,8 @@
 (function () {
   'use strict';
   var options = {
-    host: 'rabbit.cmmc.ninja',
-    port: 8000,
+    host: 'iot.eclipse.org',
+    port: 1883,
   };
   angular
 	.module('CMMCDevices.controllers', [])
@@ -15,8 +15,6 @@
       return MQTT;
     })
     .factory("mqttXYZ", function (mqttwsProvider) {
-      options.host = "cmmc.xyz";
-      options.port = 9001;
       var MQTT = mqttwsProvider(options);
       return MQTT;
     })
