@@ -44,14 +44,18 @@
             <md-option value="DEAD">Offline</md-option>
           </md-select>
         </md-input-container>
+
+        <md-button ng-click="toggleRight()" class="md-primary">
+          Config
+        </md-button>
       </div>
 
-      <div layout="row" layout-sm="column" layout-align="space-around" ng-if="(main.devices | isEmpty) == true">
+      <!-- <div layout="row" layout-sm="column" layout-align="space-around" ng-if="(main.devices | isEmpty) == true">
         <md-progress-circular class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
-      </div>
+      </div> -->
 
       <div class="techs" layout-align="center">
-        <md-card ng-class="device.status" ng-repeat="device in main.devices | name:filterDevice.name | status:onlineStatus">
+        <md-card ng-class="device.status" ng-repeat="device in main.devices | name:filterDevice.name | status:onlineStatus | orderBy:'status'">
           <div class="thumbnail">
             <!--<img class="pull-right" ng-src="assets/images/{{ device.logo }}" alt="{{ device.title }}">-->
             <div class="caption">
@@ -66,6 +70,41 @@
           </div>
         </md-card>
       </div>
+
+    </section>
+
+    <section>
+      <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right" layout-align="start center">
+        <md-toolbar class="md-theme-light" layout="row" layout-align="center center">
+          Config
+        </md-toolbar>
+        <md-content layout-padding class="autoScroll">
+              <md-input-container>
+                <label>Host</label>
+                <input ng-model="config.host">
+              </md-input-container>
+              <md-input-container>
+                <label>Port</label>
+                <input ng-model="config.port">
+              </md-input-container>
+              <md-input-container>
+                <label>Username</label>
+                <input ng-model="config.username">
+              </md-input-container>
+              <md-input-container>
+                <label>Password</label>
+                <input ng-model="config.password" type="password">
+              </md-input-container>
+
+              <md-input-container>
+                <md-button class="md-raised" ng-click="connect()">Conect</md-button>
+              </md-input-container>
+              <md-input-container>
+                <md-button class="md-raised md-warn" ng-click="disconnect()">Disconnecr</md-button>
+              </md-input-container>
+        </md-content>
+
+      </md-sidenav>
     </section>
   </md-content>
 

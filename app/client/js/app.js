@@ -11,7 +11,7 @@
 // socketScript.onload = function() {
 // }
  
-angular.module('CMMCDevices', ['ngMaterial', 'ngRoute',  'CMMCDevices.controllers', 'CMMCDevices.providers'])
+angular.module('CMMCDevices', ['ngMaterial', 'ngRoute',  'CMMCDevices.controllers', 'CMMCDevices.providers', 'ngStorage'])
  
 .config(['$routeProvider', '$mdThemingProvider',
         function($routeProvider, $mdThemingProvider) {

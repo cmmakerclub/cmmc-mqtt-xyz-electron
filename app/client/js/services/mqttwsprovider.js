@@ -29,6 +29,14 @@ angular.module('CMMCDevices.providers', [])
                     on: function (event, func) {
                         events[event] = func;
                     },
+                    end: function(callback) {
+                        mqtt.on('close', function() {
+                            if (callback) {
+                                callback();
+                            }
+                        });
+                        mqtt.end();
+                    },
                     addListener: function () { },
                     subscribe: function (topic, opts) {
                         opts = opts || { qos: 0 };
@@ -43,9 +51,19 @@ angular.module('CMMCDevices.providers', [])
                             return defer.promise;
                         };
                     },
-                    connect: function () {
-                        var defer = $q.defer();
+                    connect: function (config) {
 
+                        config = config || {};
+
+                        if (config.username == "") {
+
+                            delete (config.username);
+                            delete (config.password);
+
+                        }
+
+                        var defer = $q.defer();
+ 
                         var onSuccess = function () {
                             var ev = events.connected || function () { };
                             ev.call(null, arguments);
@@ -56,8 +74,8 @@ angular.module('CMMCDevices.providers', [])
                             $window.setTimeout(wrappedSocket.connect, reconnectTimeout);
                         };
 
-
-                        _options = angular.extend({ }, options)
+                        _options = angular.extend({ }, options);
+                        _options = angular.extend(_options, config);
                         mqtt = _mqtt.connect('mqtt://'+ _options.host, _options);
                         mqtt.on('connect', onSuccess);
 
@@ -82,6 +100,7 @@ angular.module('CMMCDevices.providers', [])
                 // mqtt.conn
 
                 // var callback = options.callback;
+
 
 
                 return wrappedSocket;
