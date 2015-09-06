@@ -79,6 +79,11 @@ angular.module('CMMCDevices.providers', [])
                         mqtt = _mqtt.connect('mqtt://'+ _options.host, _options);
                         mqtt.on('connect', onSuccess);
 
+                        mqtt.on('error', function(error) {
+
+                            console.log('error')
+                            console.log(error)
+                        });
 
                         mqtt.on('message', function (topic, message) {
                             var topic = topic.toString();

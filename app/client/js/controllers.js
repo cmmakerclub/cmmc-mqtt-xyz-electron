@@ -138,6 +138,7 @@
     $scope.connect = function () {
 
       addListener();
+      vm.devices = {};
 
       mqttLWT.connect($scope.config).then(mqttLWT.subscribe("esp8266/+/online"));
       myMqtt.connect($scope.config).then(myMqtt.subscribe("esp8266/+/status"));
