@@ -130,7 +130,7 @@
       });
     }
     
-    $scope.showDetail = function(ev, device) {
+    $scope.showDetail = function(ev, deviceUUIDuuid) {
       $mdDialog.show({
         controller: DialogController,
         templateUrl: 'app/client/templates/Detail.html',
@@ -138,7 +138,8 @@
         targetEvent: ev,
         clickOutsideToClose:true,
         locals: {
-           device: device
+           deviceUUID: deviceUUIDuuid,
+           devices: $scope.allDevices
          },
       })
       .then(function(answer) {
@@ -150,6 +151,10 @@
 
     var remmoveDevices = function() {
       vm.devices = {};
+    }
+
+    $scope.allDevices = function () {
+        return vm.devices;
     }
 
     //asynchronously
@@ -169,8 +174,11 @@
       mqttXYZ.end(remmoveDevices);
     }
 
-    function DialogController($scope, $mdDialog, device) {
-      $scope.device = device;
+    function DialogController($scope, $mdDialog, deviceUUID, devices) {
+
+      $scope.devices = devices;
+
+      $scope.deviceUUID = deviceUUID;
       $scope.hide = function() {
         $mdDialog.hide();
       };

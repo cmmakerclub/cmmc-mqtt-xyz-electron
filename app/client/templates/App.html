@@ -55,12 +55,12 @@
       </div> -->
 
       <div class="techs" layout-align="center">
-        <md-card ng-class="device.status" ng-repeat="device in main.devices | name:filterDevice.name | status:onlineStatus | orderBy:'status'">
+        <md-card ng-class="device.status" ng-repeat="(key, device) in main.devices | name:filterDevice.name | status:onlineStatus | orderBy:'status'">
           <div class="thumbnail">
             <!--<img class="pull-right" ng-src="assets/images/{{ device.logo }}" alt="{{ device.title }}">-->
             <div class="caption">
               <h3>{{ device.d.myName }} - {{ device.status }}</h3>
-              <div ng-show="{{device.info.id || device.d.id}}">ID {{ device.info.id || device.d.id }}</div>
+              <div ng-show="{{ device.info.id !='' || device.d.id != ''}}">ID {{ device.info.id || device.d.id }}</div>
               <div ng-show="{{device.d.ip}}">Ip: {{ device.d.ip }}</div>
               <div>Data: {{ device.d.seconds }} ({{ device.d.subscription }})</div>
               <div>Sensor: {{ device.info.sensor || device.d.sensor || "?" }}</div>
@@ -69,7 +69,7 @@
             </div>
           </div>
           <div class="md-actions" layout="row" layout-align="end center">
-            <md-button ng-click="showDetail($event, device)">Detail</md-button>
+            <md-button ng-click="showDetail($event, key)">Detail</md-button>
           </div>
         </md-card>
       </div>

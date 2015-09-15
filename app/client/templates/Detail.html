@@ -1,13 +1,14 @@
 <md-dialog flex="40">
   <md-toolbar>
     <div class="md-toolbar-tools">
-      <h2>{{ device.d.myName }}</h2>
+      <h2>{{ devices()[deviceUUID].d.myName }}</h2>
       <span flex></span>
     </div>
   </md-toolbar>
   <md-dialog-content>
+
       <h3>Detail</h3>
-      <div ng-repeat="(key, value) in device.d" layout="row">
+      <div ng-repeat="(key, value) in devices()[deviceUUID].d" layout="row">
         
         <div flex="50">
           {{ key }}
@@ -17,5 +18,6 @@
         </div>
 
       </div>
+
   </md-dialog-content>
 </md-dialog>
