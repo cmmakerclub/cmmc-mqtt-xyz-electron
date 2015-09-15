@@ -60,13 +60,16 @@
             <!--<img class="pull-right" ng-src="assets/images/{{ device.logo }}" alt="{{ device.title }}">-->
             <div class="caption">
               <h3>{{ device.d.myName }} - {{ device.status }}</h3>
-              <p>{{ device.info.id || device.d.id }} - {{ device.d.ip }}</p>
-              <p>{{ device.d.seconds }} ({{ device.d.subscription }})</p>
-              <p>{{ device.info.sensor || device.d.sensor || "?" }}</p>
-              <p ng-show="{{device.online}}">esp8266/{{ device.info.id || device.d.id }}/status</p>
-              <!--<p>esp8266/{{ device.info.id || device.d.id }}/command</p>                            -->
-              <p><a ng-href="{{ device.url }}">{{ device.url }}</a></p>
+              <div ng-show="{{device.info.id || device.d.id}}">ID {{ device.info.id || device.d.id }}</div>
+              <div ng-show="{{device.d.ip}}">Ip: {{ device.d.ip }}</div>
+              <div>Data: {{ device.d.seconds }} ({{ device.d.subscription }})</div>
+              <div>Sensor: {{ device.info.sensor || device.d.sensor || "?" }}</div>
+              <div ng-show="{{device.online}}">Path: esp8266/{{ device.info.id || device.d.id }}/status</div>
+              <!--<div>esp8266/{{ device.info.id || device.d.id }}/command</div>                            -->
             </div>
+          </div>
+          <div class="md-actions" layout="row" layout-align="end center">
+            <md-button ng-click="showDetail($event, device)">Detail</md-button>
           </div>
         </md-card>
       </div>

@@ -60,7 +60,7 @@
     .controller('AppCtrl', AppCtrl);
 
   /** @ngInject */
-  function AppCtrl($scope, $timeout, myMqtt, mqttXYZ, mqttLWT, $localStorage, $sessionStorage, $mdSidenav, $mdUtil) {
+  function AppCtrl($scope, $timeout, myMqtt, mqttXYZ, mqttLWT, $localStorage, $sessionStorage, $mdSidenav, $mdUtil, $mdDialog) {
     var vm = this;
     vm.devices = {};
     vm.LWT = {};
@@ -130,6 +130,24 @@
       });
     }
     
+    $scope.showDetail = function(ev, device) {
+      $mdDialog.show({
+        controller: DialogController,
+        templateUrl: 'app/client/templates/Detail.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true,
+        locals: {
+           device: device
+         },
+      })
+      .then(function(answer) {
+        $scope.status = 'You said the information was "' + answer + '".';
+      }, function() {
+        $scope.status = 'You cancelled the dialog.';
+      });
+    };
+
     var remmoveDevices = function() {
       vm.devices = {};
     }
@@ -149,6 +167,19 @@
       mqttLWT.end(remmoveDevices);
       myMqtt.end(remmoveDevices);
       mqttXYZ.end(remmoveDevices);
+    }
+
+    function DialogController($scope, $mdDialog, device) {
+      $scope.device = device;
+      $scope.hide = function() {
+        $mdDialog.hide();
+      };
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
+      $scope.answer = function(answer) {
+        $mdDialog.hide(answer);
+      };
     }
 
     $scope.connect();
