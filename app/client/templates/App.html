@@ -60,11 +60,11 @@
             <!--<img class="pull-right" ng-src="assets/images/{{ device.logo }}" alt="{{ device.title }}">-->
             <div class="caption">
               <h3>{{ device.d.myName }} - {{ device.status }}</h3>
-              <div ng-show="{{ device.info.id !='' || device.d.id != ''}}">ID {{ device.info.id || device.d.id }}</div>
-              <div ng-show="{{device.d.ip}}">Ip: {{ device.d.ip }}</div>
-              <div>Data: {{ device.d.seconds }} ({{ device.d.subscription }})</div>
-              <div>Sensor: {{ device.info.sensor || device.d.sensor || "?" }}</div>
-              <div ng-show="{{device.online}}">Path: esp8266/{{ device.info.id || device.d.id }}/status</div>
+              <div ng-show="{{ device.info.id !='' || device.d.id != ''}}">{{ device.info.id || device.d.id }}</div>
+              <div>{{ device.d.ip }}</div>
+              <div>{{ device.d.seconds }} ({{ device.d.subscription }})</div>
+              <div>{{ device.info.sensor || device.d.sensor || "?" }}</div>
+              <div ng-show="{{device.online}}">{{ device.info.id || device.d.id }}/status</div>
               <!--<div>esp8266/{{ device.info.id || device.d.id }}/command</div>                            -->
             </div>
           </div>

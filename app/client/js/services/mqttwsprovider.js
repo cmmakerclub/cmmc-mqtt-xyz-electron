@@ -46,12 +46,14 @@ angular.module('CMMCDevices.providers', [])
                                 defer.resolve(mqtt);
                             };
 
+                            console.log("connected")
                             opts.onSuccess = subscribed;
                             mqtt.subscribe(topic, opts);
                             return defer.promise;
                         };
                     },
                     connect: function (config) {
+                        console.log ("connecting..");
 
                         config = config || {};
 
@@ -76,21 +78,28 @@ angular.module('CMMCDevices.providers', [])
 
                         _options = angular.extend({ }, options);
                         _options = angular.extend(_options, config);
+                        _options.clientId = "";
+                        _options.host = 'cmmc.xyz';
+                        _options.port = 1883;
+                        _options.username = "";
+                        _options.clientId = "";
+                        _options.password = "";
+                        console.log (_options);
                         mqtt = _mqtt.connect('mqtt://'+ _options.host, _options);
                         mqtt.on('connect', onSuccess);
 
                         mqtt.on('error', function(error) {
-
                             console.log('error')
                             console.log(error)
+                            onFailure(error);
                         });
 
                         mqtt.on('message', function (topic, message) {
                             var topic = topic.toString();
                             var payload = message.toString();
                             var ev = events.message || function () { };
+                            var ev2 = events[topic.toString()] || function () { };                            
                             ev.apply(null, [topic, payload, message]);
-                            var ev2 = events[topic.toString()] || function () { };
                             ev2.apply(null, [payload, message]);
                         });
 

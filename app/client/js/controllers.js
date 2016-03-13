@@ -60,7 +60,8 @@
     .controller('AppCtrl', AppCtrl);
 
   /** @ngInject */
-  function AppCtrl($scope, $timeout, myMqtt, mqttXYZ, mqttLWT, $localStorage, $sessionStorage, $mdSidenav, $mdUtil, $mdDialog) {
+  function AppCtrl($scope, $timeout, myMqtt, mqttXYZ, mqttLWT, 
+    $localStorage, $sessionStorage, $mdSidenav, $mdUtil, $mdDialog, $log) {
     var vm = this;
     vm.devices = {};
     vm.LWT = {};
@@ -79,10 +80,11 @@
     // load config
     $scope.storage = $localStorage.$default({
       config: {
-        host: 'iot.eclipse.org',
+        host: 'cmmc.xyz',
         port: 1883,
-        username: "",
-        password: ""
+        // username: "GaBH7sxFDUEX0hl",
+        // clientId: "MpViO02hLwk8czi9",
+        // password: "5dNmPIAVAvmDpK+Wd9/4m5nzbNw="
       }
     });
 
@@ -95,26 +97,23 @@
     $scope.filterDevice.name = "";
 
     var onMsg = function (topic, payload) {
-      // console.log("topic", topic, payload);
-      var _payload = JSON.parse(payload);
-      var _id2 = _payload.info && _payload.info.id;
-      var _id = _payload.d && _payload.d.id;
-      _payload.status = vm.LWT[_id || _id2] || "UNKNOWN";
-      _payload.online = _payload.status !== "DEAD";
-      vm.devices[_id || _id2] = _payload;
-      delete vm.devices.undefined;
-      $scope.$apply();
-    };
+      try {
+      var topics = topic.split("/");
+      // console.log(topics)
+      var max_depth = topics.length -1;
 
-    var addListener = function() {
-      myMqtt.on("message", onMsg);
-      mqttXYZ.on("message", onMsg);
-      mqttLWT.on("message", function (topic, payload) {
-        var topics = topic.split("/");
+      var incomming_topic  = topics[max_depth];
+
+
+
+      if (incomming_topic == "online") {
+        console.log("online", topics); 
         var values = payload.split("|");
+
         var status = values[0];
         var id = values[1];
-        var mac = topics[1];
+        var mac = values[1];
+        $log.debug('id', id, "mac", mac, "status", status, new Date());
 
         if (mac && mac === status) {
           status = "online";
@@ -127,7 +126,28 @@
           console.log(vm);
           $scope.$apply();
         }
-      });
+      }
+      else {
+        var _payload = JSON.parse(payload);
+        var _id2 = _payload.info && _payload.info.id;
+        var _id = _payload.d && _payload.d.id;
+        _payload.status = vm.LWT[_id || _id2] || "ONLINE" || "UNKNOWN";
+        _payload.online = _payload.status !== "DEAD";
+        vm.devices[_id || _id2] = _payload;
+        delete vm.devices.undefined;
+        $scope.$apply();
+      }
+    }
+    catch (ex) {
+      console.log("EXCEPTION!!!", ex);
+      console.log("EXCEPTION!!!", ex);
+      console.log("EXCEPTION!!!", ex);
+    }
+    };
+
+    var addListener = function() {
+      myMqtt.on("message", onMsg);
+      mqttXYZ.on("message", onMsg);
     }
     
     $scope.showDetail = function(ev, deviceUUIDuuid) {
@@ -163,15 +183,19 @@
       addListener();
       vm.devices = {};
 
-      mqttLWT.connect($scope.config).then(mqttLWT.subscribe("esp8266/+/online"));
-      myMqtt.connect($scope.config).then(myMqtt.subscribe("esp8266/+/status"));
-      mqttXYZ.connect($scope.config).then(mqttXYZ.subscribe("esp8266/+/status"));      
+      // mqttLWT.connect($scope.config).then(mqttLWT.subscribe("/HelloChiangMaiMakerClub/gearname/#/status"));
+      myMqtt.connect($scope.config)
+       .then(
+          myMqtt.subscribe("/NatWeerawan/gearname/#")
+        );
+
+      // myMqtt.connect($scope.config)));
+      // myMqtt.connect($scope.config).then(myMqtt.subscribe("esp8266/+/status"));
+      // mqttXYZ.connect($scope.config).then(mqttXYZ.subscribe("esp8266/+/status"));      
     }
 
     $scope.disconnect = function () {
-      mqttLWT.end(remmoveDevices);
       myMqtt.end(remmoveDevices);
-      mqttXYZ.end(remmoveDevices);
     }
 
     function DialogController($scope, $mdDialog, deviceUUID, devices) {
